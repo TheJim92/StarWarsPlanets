@@ -4,6 +4,16 @@ import 'package:http/http.dart' as http;
 import 'package:star_wars_planets/model/planet.dart';
 
 class RemoteDataSource {
+  Future<http.Response> login(String username, String password) async {
+    var url = "http://lab.gruppometa.it/test-js/check-username/";
+    var response = await http.post(
+        Uri.parse(url), body: {'username': username, 'password': password}
+    );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    return response;
+  }
+
   Future<List<Planet>> getPlanets() async {
     var url = "https://swapi.dev/api/planets/";
     var response = await http.get(Uri.parse(url));
@@ -14,6 +24,8 @@ class RemoteDataSource {
   }
 
   List<Planet> deserializePlanets(Map<String, dynamic> json) {
-      return json['results'].map<Planet>((planet) => Planet.fromJson(planet)).toList();
+    return json['results']
+        .map<Planet>((planet) => Planet.fromJson(planet))
+        .toList();
   }
 }
