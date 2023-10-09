@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:star_wars_planets/model/remote_data_source.dart';
 import 'package:star_wars_planets/view/widgets/planet_card.dart';
 
-import 'model/planets.dart';
+import 'model/planet.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Home'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -38,8 +37,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late Future<String> responseBody;
-  Planets planets = Planets(planets: []);
-  int _counter = 0;
+  List<Planet> planets = [];
 
   @override
   void initState() {
@@ -47,15 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
     getPlanets();
   }
 
-  Future<Planets> getPlanets() async {
+  Future<List<Planet>> getPlanets() async {
     planets = await RemoteDataSource().getPlanets();
     return planets;
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
   }
 
   @override
@@ -65,14 +57,14 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: FutureBuilder<Planets>(
+      body: FutureBuilder<List<Planet>>(
         future: getPlanets(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-              itemCount: planets.planets.length,
+              itemCount: planets.length,
               itemBuilder: (context, index) {
-                var planet = planets.planets[index];
+                var planet = planets[index];
                 return PlanetCard(
                     name: planet.name,
                     population: planet.population,
@@ -83,14 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
