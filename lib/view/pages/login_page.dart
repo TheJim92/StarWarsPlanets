@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:star_wars_planets/model/remote_data_source.dart';
 import 'package:star_wars_planets/view/pages/planets_page.dart';
+import 'package:star_wars_planets/view/pages/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,16 +10,31 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String username = "";
-  String password = "";
+
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isAuthenticating = false;
 
-  void toggleAuth() {
-    setState(() {
-      isAuthenticating = !isAuthenticating;
-    });
+  void verifyLogin() {
+    String username = usernameController.text;
+    String password = passwordController.text;
+    if (username == "Luke" && password == "skywalker") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+          const PlanetsPage(title: 'Planets'),
+        ),
+      );
+    } else {
+      var snackBar = const SnackBar(
+        content: Text(
+            "Nome utente o password errati."),
+      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    }
   }
 
   @override
@@ -39,38 +53,16 @@ class _LoginPageState extends State<LoginPage> {
                     label: Text('Nome utente'),
                   ),
                   controller: usernameController,
-                  onEditingComplete: () => username = usernameController.text,
                 ),
                 TextField(
                   decoration: const InputDecoration(
                     label: Text('Password'),
                   ),
                   controller: passwordController,
-                  onEditingComplete: () => password = passwordController.text,
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    toggleAuth();
-                    http.Response response =
-                        await RemoteDataSource().login(username, password);
-                    toggleAuth();
-                    if (response.statusCode == 200 && context.mounted) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const PlanetsPage(title: 'Planets'),
-                        ),
-                      );
-                    } else {
-                      var snackBar = SnackBar(
-                        content: Text(
-                            "${response.statusCode} ${response.reasonPhrase ?? ""}"),
-                      );
-                      if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    }
+                    verifyLogin();
                     /* FutureBuilder<String>(
                         future: RemoteDataSource().login(username, password),
                         builder: (context, snapshot) {
@@ -96,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const PlanetsPage(title: 'Planets'),
+                             const SignupPage(),
                       ),
                     );
                   },
