@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:star_wars_planets/model/remote_data_source.dart';
 import 'package:star_wars_planets/view/widgets/planet_card.dart';
 import 'package:star_wars_planets/viewmodel/planets_viewmodel.dart';
 
-import '../../model/planet.dart';
 import '../../theme/res/color_set.dart';
 
 class PlanetsPage extends StatefulWidget {
@@ -24,7 +22,7 @@ class _PlanetsPageState extends State<PlanetsPage> {
     initPlanets();
   }
 
-  initPlanets(){
+  initPlanets() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<PlanetsViewmodel>(context, listen: false).initPlanets();
     });
@@ -43,37 +41,20 @@ class _PlanetsPageState extends State<PlanetsPage> {
             Column(
               children: [
                 Flexible(
-                  flex: 2,
-                  child: Column(
-                    children: [
-                      TextField(
-                        decoration: const InputDecoration(
-                          label: Text('Search',
-                              style: TextStyle(color: AppColor.secondary)),
-                        ),
-                        controller: viewmodel.searchController,
-                        /*onChanged: (text) {
-                        for (Planet planet in planets) {
-                          if (planet.name.contains(text)) {
-                            planets.add(planet);
-                          }
-                          setState(() {
-                          });
-                        }
-                      }
-                      */
+                  flex: 1,
+                  child: TextField(
+                      decoration: const InputDecoration(
+                        label: Text('Cerca',
+                            style: TextStyle(color: AppColor.secondary)),
                       ),
-                      ListTile(
-                        leading: IconButton(
-                            onPressed: () => viewmodel.decrementPage(),
-                            icon: const Icon(Icons.chevron_left)),
-                        trailing: IconButton(
-                            onPressed: () => viewmodel.incrementPage(),
-                            icon: const Icon(Icons.chevron_right)),
-                        title: Text('Pagina ${viewmodel.page}', textAlign: TextAlign.center)
-                      )
-                    ],
-                  ),
+                      controller: viewmodel.searchController,
+                      onChanged: (text) {
+                        if (text.length % 2 == 0 && text.isNotEmpty) {
+                          viewmodel.searchPlanets(text);
+                        } else if (text.isEmpty) {
+                          viewmodel.restorePage();
+                        }
+                      }),
                 ),
                 Expanded(
                   flex: 9,
@@ -91,6 +72,17 @@ class _PlanetsPageState extends State<PlanetsPage> {
                     },
                   ),
                 ),
+                Flexible(
+                    flex: 1,
+                    child: ListTile(
+                        leading: IconButton(
+                            onPressed: () => viewmodel.decrementPage(),
+                            icon: const Icon(Icons.chevron_left)),
+                        trailing: IconButton(
+                            onPressed: () => viewmodel.incrementPage(),
+                            icon: const Icon(Icons.chevron_right)),
+                        title: Text('Pagina ${viewmodel.page}',
+                            textAlign: TextAlign.center)))
               ],
             ),
             viewmodel.isLoading

@@ -29,20 +29,32 @@ class RemoteDataSource {
     return response;
   }
 
+  List<Planet> deserializePlanets(Map<String, dynamic> json) {
+    return json['results']
+        .map<Planet>((planet) => Planet.fromJson(planet))
+        .toList();
+  }
+
   Future<List<Planet>> getPlanets(int page) async {
     var url = "https://swapi.dev/api/planets/?page=$page";
     var response = await http.get(Uri.parse(url)
-        //,headers: {'Content-Type': 'application/json'}
-        );
+      //,headers: {'Content-Type': 'application/json'}
+    );
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     List<Planet> planets = deserializePlanets(jsonDecode(response.body));
     return planets;
   }
 
-  List<Planet> deserializePlanets(Map<String, dynamic> json) {
-    return json['results']
-        .map<Planet>((planet) => Planet.fromJson(planet))
-        .toList();
+  Future<List<Planet>> searchPlanets(String name) async {
+    var url = "https://swapi.dev/api/planets/?search=$name";
+    var response = await http.get(Uri.parse(url)
+      //,headers: {'Content-Type': 'application/json'}
+    );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    List<Planet> planets = deserializePlanets(jsonDecode(response.body));
+    return planets;
   }
+
 }

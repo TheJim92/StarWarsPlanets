@@ -5,6 +5,7 @@ import '../model/remote_data_source.dart';
 
 class PlanetsViewmodel extends ChangeNotifier {
   List<Planet> planets = [];
+  List<Planet> backup = [];
   bool isLoading = false;
   int page = 1;
   TextEditingController searchController = TextEditingController();
@@ -23,6 +24,7 @@ class PlanetsViewmodel extends ChangeNotifier {
 
   void setPage(int page) {
     if (page > 0 && page < 7) {
+      searchController.text = "";
       this.page = page;
       getPlanets(page);
     }
@@ -36,7 +38,18 @@ class PlanetsViewmodel extends ChangeNotifier {
     setPage(page + 1);
   }
 
+  void restorePage() {
+    planets = backup;
+    notifyListeners();
+  }
+
   void initPlanets() {
     setPage(1);
+  }
+
+  void searchPlanets(String name) async {
+    backup = planets;
+    planets = await RemoteDataSource().searchPlanets(name);
+    notifyListeners();
   }
 }
