@@ -29,8 +29,8 @@ class RemoteDataSource {
     return response;
   }
 
-  Future<List<Planet>> getPlanets() async {
-    var url = "https://swapi.dev/api/planets/";
+  Future<List<Planet>> getPlanets(int page) async {
+    var url = "https://swapi.dev/api/planets/?page=$page";
     var response = await http.get(Uri.parse(url)
         //,headers: {'Content-Type': 'application/json'}
         );

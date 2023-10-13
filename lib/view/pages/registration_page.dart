@@ -55,7 +55,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
         lastNameController.text);
     toggleAuth();
     if (response.statusCode == 200 && context.mounted) {
-      //jsonEncode nel datasource potrebbe essere la causa per cui lo username "prova" non ritorna l'errore
       Navigator.push(
         context,
         MaterialPageRoute(
