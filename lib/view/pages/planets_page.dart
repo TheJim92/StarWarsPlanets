@@ -5,9 +5,9 @@ import 'package:star_wars_planets/view/widgets/planet_card.dart';
 import '../../model/planet.dart';
 
 class PlanetsPage extends StatefulWidget {
-  const PlanetsPage({super.key, required this.title});
+  const PlanetsPage({super.key});
 
-  final String title;
+  final String title = 'Planets';
 
   @override
   State<PlanetsPage> createState() => _PlanetsPageState();
@@ -32,29 +32,33 @@ class _PlanetsPageState extends State<PlanetsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: FutureBuilder<List<Planet>>(
-        future: getPlanets(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: planets.length,
-              itemBuilder: (context, index) {
-                var planet = planets[index];
-                return PlanetCard(
-                    name: planet.name,
-                    population: planet.population,
-                    terrain: planet.terrain,
-                    diameter: planet.diameter);
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
+
+        title: const Text("Planets"),
+    ),
+      body: Column(
+        children: [
+          FutureBuilder<List<Planet>>(
+            future: getPlanets(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: planets.length,
+                  itemBuilder: (context, index) {
+                    var planet = planets[index];
+                    return PlanetCard(
+                        name: planet.name,
+                        population: planet.population,
+                        terrain: planet.terrain,
+                        diameter: planet.diameter);
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
+        ],
       ),
     );
   }

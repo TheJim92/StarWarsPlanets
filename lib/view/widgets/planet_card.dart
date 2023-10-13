@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/res/color_set.dart';
+
 class PlanetCard extends StatelessWidget {
   final String name;
   final String population;
@@ -16,16 +18,36 @@ class PlanetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      //borderOnForeground: true,
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(name),
-          Text(population),
-          Text(terrain),
-          Text(diameter),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              flex:2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: AppColor.secondary),),
+                  ),
+                  Text("Population: " + population),
+                  Text("Terrain: " + terrain),
+                  Text("Diameter: " + diameter),
+                ],
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Container(
+                width: 80,
+                height: 80,
+                decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColor.secondary),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

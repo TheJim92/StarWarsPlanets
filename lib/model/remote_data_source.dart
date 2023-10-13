@@ -4,14 +4,26 @@ import 'package:http/http.dart' as http;
 import 'package:star_wars_planets/model/planet.dart';
 
 class RemoteDataSource {
-  Future<http.Response> signUp(String username, String password,
-      String firstName, String lastName) async {
+  Future<http.Response> checkUsername(String username) async {
     var url = "http://lab.gruppometa.it/test-js/check-username/";
     var response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'username': username, 'password': password, 'firstName': firstName, 'lastName': lastName}),
+      body: jsonEncode({'username': username}),
     //jsonEncode potrebbe essere la causa per cui lo username "prova" non ritorna l'errore
+    );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    return response;
+  }
+
+  Future<http.Response> registration(String username, String password,
+      String firstName, String lastName) async {
+    var url = "http://lab.gruppometa.it/test-js/registration/";
+    var response = await http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'username': username, 'password': password, 'firstName': firstName, 'lastName': lastName}),
     );
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
