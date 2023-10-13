@@ -10,26 +10,9 @@ import '../../theme/schemes/app_color_scheme.dart';
 
 class AppTheme {
   static ThemeData lightTheme() {
-    /*
-    La funzione ritorna un ThemeData, oggetto di definizione e di raccolta dello stile generale dell'app
-    oltre alle proprietà riportate qui se ne trovano altre. Alcune fanno riferimento diretto a determinate widget
-    es:
-    - elevatedButtonTheme
-    - bottomNavigationBarTheme
-    - navigationBarTheme
-    - listTileTheme
-
-    è buona pratica definire lo stile di tutti i widget nel ThemeData, anche se i widget possono essere stilizzati singolarmente.
-    Utilizzando il ThemeData tutti i componenti ereditano lo stile definito, va da se che per stili di widget che si ripetono nell'app
-    è molto comodo definire lo stile una volta e questo automaticamente è recepito dal widget
-
-     */
-    // link: https://api.flutter.dev/flutter/material/ThemeData-class.html
-    /// Sapete cosa fare ^_^
     return ThemeData(
-      scaffoldBackgroundColor: AppColor.background,
+      scaffoldBackgroundColor: Colors.black,// AppColor.background,
         appBarTheme: AppBarTheme(
-          // Come suggerito dal nome, qui si definisce lo stile ereditato da tutte le AppBar presenti nell'app
           elevation: 0,
           backgroundColor: AppColor.surface,
           actionsIconTheme: const IconThemeData(

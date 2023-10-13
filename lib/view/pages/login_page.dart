@@ -42,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
     return Stack(
       children: [
         Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Stack(
             children: [
               Image.asset("assets/background_portrait_right.png",
