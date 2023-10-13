@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:star_wars_planets/view/pages/planets_page.dart';
 
 import '../../model/remote_data_source.dart';
+import '../../utils/snackbars.dart';
+import '../../utils/validators.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -16,7 +18,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-
+  final GlobalKey<FormState> registrationFormKey = GlobalKey<FormState>();
   bool isAuthenticating = false;
 
   void toggleAuth() {
@@ -36,11 +38,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       //TODO: Vedi se riesci a prendere meglio l'errore
       List<String> errorStringList = response.body.split('"');
       String errorString = errorStringList[errorStringList.length - 2];
-      var snackBar = SnackBar(
-        content: Text("Error: $errorString"),
-      );
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        SnackBars.showSnackBar('Error: $errorString', context);
       }
       return false;
     }
@@ -62,11 +61,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
       );
     } else {
-      var snackBar = SnackBar(
-        content: Text("${response.statusCode} ${response.reasonPhrase ?? ""}"),
-      );
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        SnackBars.showSnackBar('${response.statusCode} ${response.reasonPhrase ?? ""}', context);
       }
     }
   }
@@ -81,48 +77,69 @@ class _RegistrationPageState extends State<RegistrationPage> {
             title: const Text('Registrazione'),
           ),
           body: Center(
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text('Nome utente'),
+            child: Form(
+              key: registrationFormKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      label: Text('Nome utente'),
+                    ),
+                    controller: usernameController,
+                    validator: (input) {
+                      return Validators.validateField(
+                          Validator.emptyField, input);
+                    },
                   ),
-                  controller: usernameController,
-                ),
-                TextField(
-                  decoration: const InputDecoration(
-                    label: Text('Password'),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      label: Text('Password'),
+                    ),
+                    controller: passwordController,
+                    validator: (input) {
+                      return Validators.validateField(
+                          Validator.emptyField, input);
+                    },
                   ),
-                  controller: passwordController,
-                ),
-                TextField(
-                  decoration: const InputDecoration(
-                    label: Text('Nome'),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      label: Text('Nome'),
+                    ),
+                    controller: firstNameController,
+                    validator: (input) {
+                      return Validators.validateField(
+                          Validator.emptyField, input);
+                    },
                   ),
-                  controller: firstNameController,
-                ),
-                TextField(
-                  decoration: const InputDecoration(
-                    label: Text('Cognome'),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      label: Text('Cognome'),
+                    ),
+                    controller: lastNameController,
+                    validator: (input) {
+                      return Validators.validateField(
+                          Validator.emptyField, input);
+                    },
                   ),
-                  controller: lastNameController,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    var response = await checkUsername();
-                    if (response == true) {
-                      sendData();
-                    }
-                  },
-                  child: const Text('Registrati'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Torna al login'),
-                )
-              ],
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (registrationFormKey.currentState!.validate()) {
+                        var response = await checkUsername();
+                        if (response == true) {
+                          sendData();
+                        }
+                      }
+                    },
+                    child: const Text('Registrati'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Torna al login'),
+                  )
+                ],
+              ),
             ),
           ),
         ),

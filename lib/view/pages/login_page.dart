@@ -3,7 +3,8 @@ import 'package:star_wars_planets/view/pages/planets_page.dart';
 import 'package:star_wars_planets/view/pages/registration_page.dart';
 
 import '../../theme/res/color_set.dart';
-import '../../utils/style.dart';
+import '../../utils/snackbars.dart';
+import '../../utils/validators.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isAuthenticating = false;
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   void verifyLogin() {
     String username = usernameController.text;
@@ -28,11 +30,8 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } else {
-      var snackBar = const SnackBar(
-        content: Text("Nome utente o password errati."),
-      );
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      if(mounted) {
+        SnackBars.showSnackBar('Nome utente o password errati.', context);
       }
     }
   }
@@ -62,26 +61,37 @@ class _LoginPageState extends State<LoginPage> {
                       flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
-                        child: Column(
-                          children: [
-                            TextField(
-                              decoration: const InputDecoration(
-                                label: Text('Nome utente',
-                                    style:
-                                        TextStyle(color: AppColor.secondary)),
-                              ),
-                              controller: usernameController,
-                            ),
-                            TextField(
-                              decoration: const InputDecoration(
-                                label: Text(
-                                  'Password',
-                                  style: TextStyle(color: AppColor.secondary),
+                        child: Form(
+                          key: loginFormKey,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  label: Text('Nome utente',
+                                      style:
+                                          TextStyle(color: AppColor.secondary)),
                                 ),
+                                controller: usernameController,
+                                validator: (input) {
+                                  return Validators.validateField(
+                                      Validator.emptyField, input);
+                                },
                               ),
-                              controller: passwordController,
-                            ),
-                          ],
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  label: Text(
+                                    'Password',
+                                    style: TextStyle(color: AppColor.secondary),
+                                  ),
+                                ),
+                                controller: passwordController,
+                                validator: (input) {
+                                  return Validators.validateField(
+                                      Validator.emptyField, input);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -95,18 +105,20 @@ class _LoginPageState extends State<LoginPage> {
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  verifyLogin();
+                                  if (loginFormKey.currentState!.validate()) {
+                                    verifyLogin();
+                                  }
                                 },
-                                child: const Text(
-                                  'Accedi',
-                                  style: TextStyle(color: AppColor.primary),
-                                ),
                                 style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                  shape: const StadiumBorder(
+                                    //  borderRadius: BorderRadius.circular(10.0),
                                       side: BorderSide(
                                           color: AppColor.primary, width: 2)),
                                   backgroundColor: Colors.transparent,
+                                ),
+                                child: const Text(
+                                  'Accedi',
+                                  style: TextStyle(color: AppColor.primary),
                                 ),
                               ),
                             ),
@@ -116,7 +128,8 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const RegistrationPage(),
+                                  builder: (context) =>
+                                      const RegistrationPage(),
                                 ),
                               );
                             },
