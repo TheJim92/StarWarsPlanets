@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:star_wars_planets/model/planet.dart';
 
@@ -11,8 +12,8 @@ class RemoteDataSource {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'username': username}),
     );
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
     return response;
   }
 
@@ -24,8 +25,8 @@ class RemoteDataSource {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'username': username, 'password': password, 'firstName': firstName, 'lastName': lastName}),
     );
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
     return response;
   }
 
@@ -40,8 +41,8 @@ class RemoteDataSource {
     var response = await http.get(Uri.parse(url)
       //,headers: {'Content-Type': 'application/json'}
     );
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
     List<Planet> planets = deserializePlanets(jsonDecode(response.body));
     return planets;
   }
@@ -51,8 +52,8 @@ class RemoteDataSource {
     var response = await http.get(Uri.parse(url)
       //,headers: {'Content-Type': 'application/json'}
     );
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
     List<Planet> planets = deserializePlanets(jsonDecode(response.body));
     return planets;
   }

@@ -3,13 +3,13 @@ class Planet {
   final String population;
   final String diameter;
   final String terrain;
-  //final String films;
+  final List<dynamic> films;
 
   Planet(
       {required this.name,
       required this.population,
       required this.diameter,
-      //required this.films,
+      required this.films,
       required this.terrain});
 
   factory Planet.fromJson(Map<String, dynamic> json) {
@@ -18,7 +18,7 @@ class Planet {
       population: json['population'],
       diameter: json['diameter'],
       terrain: json['terrain'],
-      //films: json['films'],
+      films: json['films'],
     );
   }
 }

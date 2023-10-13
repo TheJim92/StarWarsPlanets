@@ -13,7 +13,6 @@ class PlanetsPage extends StatefulWidget {
 }
 
 class _PlanetsPageState extends State<PlanetsPage> {
-  final String title = 'Planets';
 
   @override
   void initState() {
@@ -34,7 +33,7 @@ class _PlanetsPageState extends State<PlanetsPage> {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: const Text("Planets"),
+          title: const Text("Pianeti"),
         ),
         body: Stack(
           children: [
@@ -68,7 +67,8 @@ class _PlanetsPageState extends State<PlanetsPage> {
                           name: planet.name,
                           population: planet.population,
                           terrain: planet.terrain,
-                          diameter: planet.diameter);
+                          diameter: planet.diameter,
+                          films: planet.films);
                     },
                   ),
                 ),

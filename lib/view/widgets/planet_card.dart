@@ -7,13 +7,27 @@ class PlanetCard extends StatelessWidget {
   final String population;
   final String diameter;
   final String terrain;
+  final List<dynamic> films;
 
-  // String films
   const PlanetCard(
-      {required this.name,
+      {super.key, required this.name,
       required this.population,
       required this.terrain,
-      required this.diameter});
+      required this.diameter,
+      required this.films});
+
+  String getFilms(List<dynamic> films){
+    String filmNumbers = "";
+    for (int i=0; i<films.length; i++) {
+      String film = films[i];
+      film = film[film.length-2];
+      filmNumbers += "Episodio $film";
+      if (i<films.length-1) {
+        filmNumbers += ", ";
+      }
+    }
+    return filmNumbers;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +46,10 @@ class PlanetCard extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: AppColor.secondary),),
                   ),
-                  Text("Population: " + population),
-                  Text("Terrain: " + terrain),
-                  Text("Diameter: " + diameter),
+                  Text("Popolazione: $population"),
+                  Text("Terreno: $terrain"),
+                  Text("Diametro: $diameter"),
+                  Text("Film: ${getFilms(films)}")
                 ],
               ),
             ),
