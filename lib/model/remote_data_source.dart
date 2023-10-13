@@ -10,7 +10,6 @@ class RemoteDataSource {
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'username': username}),
-    //jsonEncode potrebbe essere la causa per cui lo username "prova" non ritorna l'errore
     );
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');

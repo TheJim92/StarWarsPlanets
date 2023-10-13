@@ -35,30 +35,26 @@ class _PlanetsPageState extends State<PlanetsPage> {
 
         title: const Text("Planets"),
     ),
-      body: Column(
-        children: [
-          FutureBuilder<List<Planet>>(
-            future: getPlanets(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: planets.length,
-                  itemBuilder: (context, index) {
-                    var planet = planets[index];
-                    return PlanetCard(
-                        name: planet.name,
-                        population: planet.population,
-                        terrain: planet.terrain,
-                        diameter: planet.diameter);
-                  },
-                );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-              return const Center(child: CircularProgressIndicator());
-            },
-          ),
-        ],
+      body: FutureBuilder<List<Planet>>(
+        future: getPlanets(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: planets.length,
+              itemBuilder: (context, index) {
+                var planet = planets[index];
+                return PlanetCard(
+                    name: planet.name,
+                    population: planet.population,
+                    terrain: planet.terrain,
+                    diameter: planet.diameter);
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
