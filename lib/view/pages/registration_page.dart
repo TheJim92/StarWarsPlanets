@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:star_wars_planets/view/pages/planets_page.dart';
 
 import '../../model/remote_data_source.dart';
 import '../../utils/snackbars.dart';
 import '../../utils/validators.dart';
-import '../supporting_widgets/text_field_widget.dart';
+import '../supporting_widgets/custom_text_field.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -28,108 +27,133 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
   }
 
-  Future<bool> checkUsername() async {
+  Future<String> checkUsername() async {
     toggleAuth();
-    http.Response response =
+    String responseMessage =
         await RemoteDataSource().checkUsername(usernameController.text);
     toggleAuth();
-    if (!response.body.contains('error') && context.mounted) {
-      return true;
-    } else {
-      //TODO: Vedi se riesci a prendere meglio l'errore
-      List<String> errorStringList = response.body.split('"');
-      String errorString = errorStringList[errorStringList.length - 2];
-      if (mounted) {
-        SnackBars.showSnackBar('Error: $errorString', context);
-      }
-      return false;
-    }
+    return responseMessage;
   }
 
   void sendData() async {
     toggleAuth();
-    http.Response response = await RemoteDataSource().registration(
+    String responseMessage = await RemoteDataSource().registration(
         usernameController.text,
         passwordController.text,
         firstNameController.text,
         lastNameController.text);
     toggleAuth();
-    if (response.statusCode == 200 && context.mounted) {
+    if (responseMessage == 'success' && context.mounted) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => const PlanetsPage(),
         ),
       );
+      SnackBars.showSnackBar('Registrazione avvenuta correttamente.', context);
     } else {
       if (mounted) {
         SnackBars.showSnackBar(
-            '${response.statusCode} ${response.reasonPhrase ?? ""}', context);
+            responseMessage, context);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            title: const Text('Registrazione'),
-          ),
-          body: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-              child: Form(
-                key: registrationFormKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        TextFieldWidget(controller: usernameController, label: 'Nome utente', validator: Validator.emptyField),
-                        TextFieldWidget(controller: passwordController, label: 'Password', validator: Validator.emptyField),
-                        TextFieldWidget(controller: firstNameController, label: 'Nome', validator: Validator.emptyField),
-                        TextFieldWidget(controller: lastNameController, label: 'Cognome', validator: Validator.emptyField),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            if (registrationFormKey.currentState!.validate()) {
-                              var response = await checkUsername();
-                              if (response == true) {
-                                sendData();
-                              }
-                            }
-                          },
-                          child: const Text('Registrati'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Torna al login'),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/space3.jpg'),
+          fit: BoxFit.cover,
         ),
-        isAuthenticating
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.black45,
+        appBar: AppBar(
+          title: const Text('Registrazione'),
+        ),
+        body: isAuthenticating
             ? Container(
                 decoration: BoxDecoration(color: Colors.black.withAlpha(128)),
                 child: const Center(
                   child: CircularProgressIndicator(),
                 ),
               )
-            : const SizedBox.shrink(),
-      ],
+            : SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: SizedBox(
+                  height: screenHeight - 100,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 30),
+                    child: Form(
+                      key: registrationFormKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Text fields
+                          Column(
+                            children: [
+                              CustomTextField(
+                                controller: usernameController,
+                                label: 'Nome utente',
+                                validator: Validator.emptyField,
+                              ),
+                              CustomTextField(
+                                controller: passwordController,
+                                label: 'Password',
+                                validator: Validator.emptyField,
+                              ),
+                              CustomTextField(
+                                controller: firstNameController,
+                                label: 'Nome',
+                                validator: Validator.emptyField,
+                              ),
+                              CustomTextField(
+                                controller: lastNameController,
+                                label: 'Cognome',
+                                validator: Validator.emptyField,
+                              ),
+                            ],
+                          ),
+
+                          // Buttons
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () async {
+                                  if (registrationFormKey.currentState!
+                                      .validate()) {
+                                    var responseMessage = await checkUsername();
+                                    if (responseMessage == 'success') {
+                                      sendData();
+                                    } else {
+                                      if (mounted) {
+                                        SnackBars.showSnackBar(
+                                            responseMessage, context);
+                                      }
+                                    }
+                                  }
+                                },
+                                child: const Text('Registrati'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Torna al login'),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+      ),
     );
   }
 }

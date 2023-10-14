@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 import '../../utils/validators.dart';
 
-class TextFieldWidget extends StatefulWidget {
+class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String label;
   final Validator validator;
 
-  const TextFieldWidget({super.key, required this.controller, required this.label, required this.validator});
+  const CustomTextField({super.key, required this.controller, required this.label, required this.validator});
 
   @override
-  State<TextFieldWidget> createState() => _TextFieldWidgetState();
+  State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
-class _TextFieldWidgetState extends State<TextFieldWidget> {
+class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(

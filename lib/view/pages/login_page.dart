@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:star_wars_planets/view/pages/planets_page.dart';
 import 'package:star_wars_planets/view/pages/registration_page.dart';
-import 'package:star_wars_planets/view/supporting_widgets/text_field_widget.dart';
 
 import '../../utils/snackbars.dart';
 import '../../utils/validators.dart';
+import '../supporting_widgets/custom_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -73,11 +73,11 @@ class _LoginPageState extends State<LoginPage> {
                     key: loginFormKey,
                     child: Column(
                       children: [
-                        TextFieldWidget(
+                        CustomTextField(
                             controller: usernameController,
                             label: 'Nome utente',
                             validator: Validator.emptyField),
-                        TextFieldWidget(
+                        CustomTextField(
                             controller: passwordController,
                             label: 'Password',
                             validator: Validator.emptyField),
