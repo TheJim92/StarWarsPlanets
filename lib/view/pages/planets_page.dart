@@ -16,7 +16,6 @@ class _PlanetsPageState extends State<PlanetsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initPlanets();
   }
@@ -32,6 +31,7 @@ class _PlanetsPageState extends State<PlanetsPage> {
     return Consumer<PlanetsViewmodel>(builder: (context, viewmodel, child) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Text("Pianeti"),
         ),
@@ -59,21 +59,30 @@ class _PlanetsPageState extends State<PlanetsPage> {
                           }
                         }),
                   ),
+
+                  // Lista di pianeti
                   Expanded(
                     flex: 9,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      //  physics: NeverScrollableScrollPhysics(),
-                      itemCount: viewmodel.planets.length,
-                      itemBuilder: (context, index) {
-                        var planet = viewmodel.planets[index];
-                        return PlanetCard(
-                            name: planet.name,
-                            population: planet.population,
-                            terrain: planet.terrain,
-                            diameter: planet.diameter,
-                            films: planet.films);
-                      },
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/space_background.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: viewmodel.planets.length,
+                        itemBuilder: (context, index) {
+                          var planet = viewmodel.planets[index];
+                          return PlanetCard(
+                              name: planet.name,
+                              population: planet.population,
+                              terrain: planet.terrain,
+                              diameter: planet.diameter,
+                              films: planet.films);
+                        },
+                      ),
                     ),
                   ),
                   Flexible(
@@ -100,15 +109,25 @@ class _PlanetsPageState extends State<PlanetsPage> {
                   )
                 : const SizedBox.shrink(),
           ],
-        ) : Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/deathstar.png'),
-              const SizedBox(height: 20),
-              const Text('Non riusciamo a trovare i pianeti, ci deve essere un problema.', textAlign: TextAlign.center,)
-            ],
+
+          //Layout di errore
+        ) : Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/space_background.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/deathstar.png'),
+                const SizedBox(height: 20),
+                const Text('Non riusciamo a trovare i pianeti, ci deve essere un problema.', textAlign: TextAlign.center,)
+              ],
+            ),
           ),
         ),
       );

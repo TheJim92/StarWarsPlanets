@@ -73,7 +73,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.black45,
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Text('Registrazione'),
         ),
@@ -96,6 +96,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+
                           // Text fields
                           Column(
                             children: [
