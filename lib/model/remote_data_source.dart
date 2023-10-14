@@ -80,22 +80,28 @@ class RemoteDataSource {
     }
   }
 
-  Future<List<Planet>> getPlanets(int page) async {
+  Future<List<Planet>?> getPlanets(int page) async {
     var url = "https://swapi.dev/api/planets/?page=$page";
-    var response = await http.get(Uri.parse(url)
-        //,headers: {'Content-Type': 'application/json'}
-        );
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
-    List<Planet> planets = deserializePlanets(jsonDecode(response.body));
-    return planets;
+    try {
+      var response = await http.get(Uri.parse(url)
+      );
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
+      List<Planet> planets = deserializePlanets(jsonDecode(response.body));
+      return planets;
+    } on SocketException {
+      return null;
+    } on HttpException {
+      return null;
+    } on FormatException {
+      return null;
+    }
   }
 
   Future<List<Planet>?> searchPlanets(String name) async {
     var url = "https://swapi.dev/api/planets/?search=$name";
     try {
       var response = await http.get(Uri.parse(url)
-          //,headers: {'Content-Type': 'application/json'}
           );
       debugPrint('Response status: ${response.statusCode}');
       debugPrint('Response body: ${response.body}');

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:star_wars_planets/view/pages/planets_page.dart';
+import 'package:star_wars_planets/viewmodel/planets_viewmodel.dart';
 
 import '../../model/remote_data_source.dart';
 import '../../utils/snackbars.dart';
@@ -44,6 +46,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         lastNameController.text);
     toggleAuth();
     if (responseMessage == 'success' && context.mounted) {
+      Provider.of<PlanetsViewmodel>(context, listen: false).serviceError = false;
       Navigator.push(
         context,
         MaterialPageRoute(

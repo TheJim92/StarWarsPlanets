@@ -18,7 +18,13 @@ class PlanetsViewmodel extends ChangeNotifier {
 
   void getPlanets(int page) async {
     toggleLoading();
-    planets = await RemoteDataSource().getPlanets(page);
+    List<Planet>? planetsOrNull;
+    planetsOrNull = await RemoteDataSource().getPlanets(page);
+    if (planetsOrNull != null) {
+      planets = planetsOrNull;
+    } else {
+      serviceError = true;
+    }
     toggleLoading();
     notifyListeners();
   }

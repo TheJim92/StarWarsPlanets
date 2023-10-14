@@ -41,6 +41,8 @@ class _PlanetsPageState extends State<PlanetsPage> {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 children: [
+
+                  // Campo di ricerca
                   Flexible(
                     flex: 1,
                     child: TextField(
