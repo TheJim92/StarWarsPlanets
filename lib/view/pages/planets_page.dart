@@ -79,10 +79,10 @@ class _PlanetsPageState extends State<PlanetsPage> {
                       child: ListTile(
                           leading: IconButton(
                               onPressed: () => viewmodel.decrementPage(),
-                              icon: const Icon(Icons.chevron_left)),
+                              icon: const Icon(Icons.chevron_left), color: AppColor.secondary),
                           trailing: IconButton(
                               onPressed: () => viewmodel.incrementPage(),
-                              icon: const Icon(Icons.chevron_right)),
+                              icon: const Icon(Icons.chevron_right), color: AppColor.secondary),
                           title: Text('Pagina ${viewmodel.page}',
                               textAlign: TextAlign.center)))
                 ],
