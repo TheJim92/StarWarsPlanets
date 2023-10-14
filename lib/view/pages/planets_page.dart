@@ -35,7 +35,7 @@ class _PlanetsPageState extends State<PlanetsPage> {
         appBar: AppBar(
           title: const Text("Pianeti"),
         ),
-        body: Stack(
+        body: !viewmodel.serviceError ? Stack(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -98,6 +98,16 @@ class _PlanetsPageState extends State<PlanetsPage> {
                   )
                 : const SizedBox.shrink(),
           ],
+        ) : Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('assets/deathstar.png'),
+              const SizedBox(height: 20),
+              const Text('Non riusciamo a trovare i pianeti, ci deve essere un problema.', textAlign: TextAlign.center,)
+            ],
+          ),
         ),
       );
     });

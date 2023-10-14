@@ -7,6 +7,7 @@ class PlanetsViewmodel extends ChangeNotifier {
   List<Planet> planets = [];
   List<Planet> backup = [];
   bool isLoading = false;
+  bool serviceError = false;
   int page = 1;
   TextEditingController searchController = TextEditingController();
 
@@ -48,8 +49,14 @@ class PlanetsViewmodel extends ChangeNotifier {
   }
 
   void searchPlanets(String name) async {
-    backup = planets;
-    planets = await RemoteDataSource().searchPlanets(name);
+    List<Planet>? planetsOrNull;
+    planetsOrNull = await RemoteDataSource().searchPlanets(name);
+    if (planetsOrNull != null) {
+      backup = planets;
+      planets = planetsOrNull;
+    } else {
+      serviceError = true;
+    }
     notifyListeners();
   }
 }
