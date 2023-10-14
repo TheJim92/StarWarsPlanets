@@ -19,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isAuthenticating = false;
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
+  // A simple local login check
   void verifyLogin() {
     String username = usernameController.text;
     String password = passwordController.text;
@@ -38,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         Scaffold(
@@ -55,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 32),
-                        child: Image.asset("assets/planets_logo_center.png"),
+                        child: Image.asset("assets/planets_logo_center.png", height: screenHeight/3),
                       ),
                       Form(
                         key: loginFormKey,
