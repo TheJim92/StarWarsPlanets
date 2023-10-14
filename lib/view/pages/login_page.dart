@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } else {
-      if(mounted) {
+      if (mounted) {
         SnackBars.showSnackBar('Nome utente o password errati.', context);
       }
     }
@@ -48,79 +48,57 @@ class _LoginPageState extends State<LoginPage> {
                   fit: BoxFit.cover),
               Container(color: Colors.black.withAlpha(160)),
               Center(
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.all(32.0),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 32),
                         child: Image.asset("assets/planets_logo_center.png"),
                       ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 50),
-                        child: Form(
-                          key: loginFormKey,
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                decoration: const InputDecoration(
-                                  label: Text('Nome utente',
-                                      style:
-                                          TextStyle(color: AppColor.secondary)),
-                                ),
-                                controller: usernameController,
-                                validator: (input) {
-                                  return Validators.validateField(
-                                      Validator.emptyField, input);
-                                },
+                      Form(
+                        key: loginFormKey,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                label: Text('Nome utente',
+                                    style:
+                                        TextStyle(color: AppColor.secondary)),
                               ),
-                              TextFormField(
-                                decoration: const InputDecoration(
-                                  label: Text(
-                                    'Password',
-                                    style: TextStyle(color: AppColor.secondary),
-                                  ),
+                              controller: usernameController,
+                              validator: (input) {
+                                return Validators.validateField(
+                                    Validator.emptyField, input);
+                              },
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                label: Text(
+                                  'Password',
+                                  style: TextStyle(color: AppColor.secondary),
                                 ),
-                                controller: passwordController,
-                                validator: (input) {
-                                  return Validators.validateField(
-                                      Validator.emptyField, input);
-                                },
                               ),
-                            ],
-                          ),
+                              controller: passwordController,
+                              validator: (input) {
+                                return Validators.validateField(
+                                    Validator.emptyField, input);
+                              },
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
+                      Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  if (loginFormKey.currentState!.validate()) {
-                                    verifyLogin();
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  shape: const StadiumBorder(
-                                    //  borderRadius: BorderRadius.circular(10.0),
-                                      side: BorderSide(
-                                          color: AppColor.primary, width: 2)),
-                                  backgroundColor: Colors.transparent,
-                                ),
-                                child: const Text(
-                                  'Accedi',
-                                  style: TextStyle(color: AppColor.primary),
-                                ),
-                              ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              if (loginFormKey.currentState!.validate()) {
+                                verifyLogin();
+                              }
+                            },
+                            child: const Text(
+                              'Accedi',
                             ),
                           ),
                           TextButton(
@@ -133,15 +111,14 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               );
                             },
-                            child: const Text('Registrati',
-                                style: TextStyle(
-                                    color: AppColor.primary,
-                                    fontWeight: FontWeight.bold)),
+                            child: const Text(
+                              'Registrati',
+                            ),
                           )
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

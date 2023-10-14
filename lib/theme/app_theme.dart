@@ -9,51 +9,75 @@ import '../../theme/schemes/app_color_scheme.dart';
 /// lo stile dell'app in lightMode,
 
 class AppTheme {
-  static ThemeData lightTheme() {
-    return ThemeData(
-      scaffoldBackgroundColor: Colors.black,// AppColor.background,
+  static ThemeData darkTheme() {
+    return ThemeData( //textTheme: const TextTheme(titleMedium: TextStyle(color: Colors.pinkAccent)),
+      //brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.black,
+        // AppColor.background,
         appBarTheme: AppBarTheme(
           elevation: 0,
-          backgroundColor: AppColor.surface,
+          backgroundColor: Colors.black,
           actionsIconTheme: const IconThemeData(
             color: AppColor.onSurface,
             size: 24,
           ),
-          titleTextStyle: AppTextTheme.bodyText1.copyWith(color: AppColor.onSurface),
+          titleTextStyle:
+          AppTextTheme.bodyText1.copyWith(color: AppColor.onSurface),
           iconTheme: const IconThemeData(
             color: AppColor.onSurface,
             size: 24,
           ),
         ),
         primaryColor: AppColor.primary,
-        brightness: Brightness.light,
         textTheme: appTextTheme,
         fontFamily: 'Manrope',
         colorScheme: appColorScheme.copyWith(secondary: AppColor.primary),
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
-              textStyle: MaterialStateProperty.all(const TextStyle(
-                  color: AppColor.surface,
-                  decoration: TextDecoration.underline,
-                  decorationColor: AppColor.surface,
-                  decorationThickness: 3))),
+            textStyle: MaterialStateProperty.all(
+              const TextStyle(
+                  color: AppColor.primary, fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(AppColor.surface),
-          shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40))),
-          textStyle: MaterialStateProperty.all(
-            const TextStyle(
-              color: AppColor.onSurface,
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
-            ),
-          ),
-          iconColor: MaterialStateProperty.all(AppColor.onSurface),
-          iconSize: MaterialStateProperty.all(24),
-        )),
+              minimumSize:
+              MaterialStateProperty.all(const Size(double.infinity, 40)),
+              backgroundColor:
+              MaterialStateProperty.all(Colors.black.withAlpha(100)),
+              shape: MaterialStateProperty.all(const StadiumBorder(
+                  side: BorderSide(color: AppColor.primary, width: 2))),
+              textStyle: MaterialStateProperty.all(
+                const TextStyle(
+                  color: AppColor.onSurface,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
+              ),
+              iconColor: MaterialStateProperty.all(AppColor.onSurface),
+              iconSize: MaterialStateProperty.all(24),
+            )),
         unselectedWidgetColor: AppColor.surface,
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(color: AppColor.secondary),
+          focusedBorder: UnderlineInputBorder(
+            borderSide:
+            BorderSide(style: BorderStyle.solid, color: AppColor.secondary),
+          ),
+        ),
+        textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: AppColor.secondary,
+            selectionColor: AppColor.secondary,
+            selectionHandleColor: AppColor.secondary),
+        cardTheme: CardTheme(
+          surfaceTintColor: Colors.transparent,
+            color: AppColor.secondary.withAlpha(100),
+          shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: const BorderSide(color: AppColor.secondary,width: 1),
+          )
+        )
     );
   }
 }

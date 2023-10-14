@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:star_wars_planets/theme/app_theme.dart';
 import 'package:star_wars_planets/view/pages/login_page.dart';
 import 'package:star_wars_planets/viewmodel/planets_viewmodel.dart';
 
@@ -20,14 +21,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Star Wars Planets',
-      theme: ThemeData(
+      /*theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        /* dark theme settings */
-      ),
+      ),*/
+      darkTheme: AppTheme.darkTheme(),
       themeMode: ThemeMode.dark,
       /* ThemeMode.system to follow system theme,
          ThemeMode.light for light theme,

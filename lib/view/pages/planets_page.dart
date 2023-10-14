@@ -37,53 +37,56 @@ class _PlanetsPageState extends State<PlanetsPage> {
         ),
         body: Stack(
           children: [
-            Column(
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: TextField(
-                      decoration: const InputDecoration(
-                        label: Text('Cerca',
-                            style: TextStyle(color: AppColor.secondary)),
-                      ),
-                      controller: viewmodel.searchController,
-                      onChanged: (text) {
-                        if (text.length % 2 == 0 && text.isNotEmpty) {
-                          viewmodel.searchPlanets(text);
-                        } else if (text.isEmpty) {
-                          viewmodel.restorePage();
-                        }
-                      }),
-                ),
-                Expanded(
-                  flex: 9,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    //  physics: NeverScrollableScrollPhysics(),
-                    itemCount: viewmodel.planets.length,
-                    itemBuilder: (context, index) {
-                      var planet = viewmodel.planets[index];
-                      return PlanetCard(
-                          name: planet.name,
-                          population: planet.population,
-                          terrain: planet.terrain,
-                          diameter: planet.diameter,
-                          films: planet.films);
-                    },
-                  ),
-                ),
-                Flexible(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                children: [
+                  Flexible(
                     flex: 1,
-                    child: ListTile(
-                        leading: IconButton(
-                            onPressed: () => viewmodel.decrementPage(),
-                            icon: const Icon(Icons.chevron_left)),
-                        trailing: IconButton(
-                            onPressed: () => viewmodel.incrementPage(),
-                            icon: const Icon(Icons.chevron_right)),
-                        title: Text('Pagina ${viewmodel.page}',
-                            textAlign: TextAlign.center)))
-              ],
+                    child: TextField(
+                        decoration: const InputDecoration(
+                          label: Text('Cerca',
+                              style: TextStyle(color: AppColor.secondary)),
+                        ),
+                        controller: viewmodel.searchController,
+                        onChanged: (text) {
+                          if (text.length % 2 == 0 && text.isNotEmpty) {
+                            viewmodel.searchPlanets(text);
+                          } else if (text.isEmpty) {
+                            viewmodel.restorePage();
+                          }
+                        }),
+                  ),
+                  Expanded(
+                    flex: 9,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      //  physics: NeverScrollableScrollPhysics(),
+                      itemCount: viewmodel.planets.length,
+                      itemBuilder: (context, index) {
+                        var planet = viewmodel.planets[index];
+                        return PlanetCard(
+                            name: planet.name,
+                            population: planet.population,
+                            terrain: planet.terrain,
+                            diameter: planet.diameter,
+                            films: planet.films);
+                      },
+                    ),
+                  ),
+                  Flexible(
+                      flex: 1,
+                      child: ListTile(
+                          leading: IconButton(
+                              onPressed: () => viewmodel.decrementPage(),
+                              icon: const Icon(Icons.chevron_left)),
+                          trailing: IconButton(
+                              onPressed: () => viewmodel.incrementPage(),
+                              icon: const Icon(Icons.chevron_right)),
+                          title: Text('Pagina ${viewmodel.page}',
+                              textAlign: TextAlign.center)))
+                ],
+              ),
             ),
             viewmodel.isLoading
                 ? Container(

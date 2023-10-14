@@ -62,7 +62,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       );
     } else {
       if (mounted) {
-        SnackBars.showSnackBar('${response.statusCode} ${response.reasonPhrase ?? ""}', context);
+        SnackBars.showSnackBar(
+            '${response.statusCode} ${response.reasonPhrase ?? ""}', context);
       }
     }
   }
@@ -77,68 +78,80 @@ class _RegistrationPageState extends State<RegistrationPage> {
             title: const Text('Registrazione'),
           ),
           body: Center(
-            child: Form(
-              key: registrationFormKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      label: Text('Nome utente'),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+              child: Form(
+                key: registrationFormKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            label: Text('Nome utente'),
+                          ),
+                          controller: usernameController,
+                          validator: (input) {
+                            return Validators.validateField(
+                                Validator.emptyField, input);
+                          },
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            label: Text('Password'),
+                          ),
+                          controller: passwordController,
+                          validator: (input) {
+                            return Validators.validateField(
+                                Validator.emptyField, input);
+                          },
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            label: Text('Nome'),
+                          ),
+                          controller: firstNameController,
+                          validator: (input) {
+                            return Validators.validateField(
+                                Validator.emptyField, input);
+                          },
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            label: Text('Cognome'),
+                          ),
+                          controller: lastNameController,
+                          validator: (input) {
+                            return Validators.validateField(
+                                Validator.emptyField, input);
+                          },
+                        ),
+                      ],
                     ),
-                    controller: usernameController,
-                    validator: (input) {
-                      return Validators.validateField(
-                          Validator.emptyField, input);
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      label: Text('Password'),
-                    ),
-                    controller: passwordController,
-                    validator: (input) {
-                      return Validators.validateField(
-                          Validator.emptyField, input);
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      label: Text('Nome'),
-                    ),
-                    controller: firstNameController,
-                    validator: (input) {
-                      return Validators.validateField(
-                          Validator.emptyField, input);
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      label: Text('Cognome'),
-                    ),
-                    controller: lastNameController,
-                    validator: (input) {
-                      return Validators.validateField(
-                          Validator.emptyField, input);
-                    },
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (registrationFormKey.currentState!.validate()) {
-                        var response = await checkUsername();
-                        if (response == true) {
-                          sendData();
-                        }
-                      }
-                    },
-                    child: const Text('Registrati'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Torna al login'),
-                  )
-                ],
+                    Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () async {
+                            if (registrationFormKey.currentState!.validate()) {
+                              var response = await checkUsername();
+                              if (response == true) {
+                                sendData();
+                              }
+                            }
+                          },
+                          child: const Text('Registrati'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Torna al login'),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
