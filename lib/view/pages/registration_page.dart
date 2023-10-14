@@ -5,6 +5,7 @@ import 'package:star_wars_planets/view/pages/planets_page.dart';
 import '../../model/remote_data_source.dart';
 import '../../utils/snackbars.dart';
 import '../../utils/validators.dart';
+import '../supporting_widgets/text_field_widget.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -87,46 +88,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   children: [
                     Column(
                       children: [
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            label: Text('Nome utente'),
-                          ),
-                          controller: usernameController,
-                          validator: (input) {
-                            return Validators.validateField(
-                                Validator.emptyField, input);
-                          },
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            label: Text('Password'),
-                          ),
-                          controller: passwordController,
-                          validator: (input) {
-                            return Validators.validateField(
-                                Validator.emptyField, input);
-                          },
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            label: Text('Nome'),
-                          ),
-                          controller: firstNameController,
-                          validator: (input) {
-                            return Validators.validateField(
-                                Validator.emptyField, input);
-                          },
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            label: Text('Cognome'),
-                          ),
-                          controller: lastNameController,
-                          validator: (input) {
-                            return Validators.validateField(
-                                Validator.emptyField, input);
-                          },
-                        ),
+                        TextFieldWidget(controller: usernameController, label: 'Nome utente', validator: Validator.emptyField),
+                        TextFieldWidget(controller: passwordController, label: 'Password', validator: Validator.emptyField),
+                        TextFieldWidget(controller: firstNameController, label: 'Nome', validator: Validator.emptyField),
+                        TextFieldWidget(controller: lastNameController, label: 'Cognome', validator: Validator.emptyField),
                       ],
                     ),
                     Column(

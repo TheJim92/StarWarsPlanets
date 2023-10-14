@@ -1,4 +1,4 @@
-enum Validator { emptyField, noSymbols }
+enum Validator { emptyField, noSymbols, none}
 
 class Validators {
   static String? validateField(Validator v, String? input) {
@@ -11,6 +11,8 @@ class Validators {
         }
       case Validator.noSymbols:
         return 'Inserire solo valori alfanumerici';
+      case Validator.none:
+        return null;
     }
   }
 }
