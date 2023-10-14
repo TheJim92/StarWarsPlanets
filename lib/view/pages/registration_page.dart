@@ -77,7 +77,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
         appBar: AppBar(
           title: const Text('Registrazione'),
         ),
-        body: isAuthenticating
+        body:
+        // Shows a circular progress indicator and forbids input if authenticating
+        // Else shows the page
+        isAuthenticating
             ? Container(
                 decoration: BoxDecoration(color: Colors.black.withAlpha(128)),
                 child: const Center(

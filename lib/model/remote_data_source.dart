@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:star_wars_planets/model/planet.dart';
 
 class RemoteDataSource {
+
   // POST call that verifies username in registration page
   Future<String> checkUsername(String username) async {
     var url = "http://lab.gruppometa.it/test-js/check-username/";
@@ -43,6 +44,7 @@ class RemoteDataSource {
     }
   }
 
+  // GET call that sends user data in registration page
   Future<String> registration(String username, String password,
       String firstName, String lastName) async {
     var url = "http://lab.gruppometa.it/test-js/registration/";
@@ -80,6 +82,7 @@ class RemoteDataSource {
     }
   }
 
+  // GET call that obtains planet list given a page number in planets page
   Future<List<Planet>?> getPlanets(int page) async {
     var url = "https://swapi.dev/api/planets/?page=$page";
     try {
@@ -98,6 +101,7 @@ class RemoteDataSource {
     }
   }
 
+  // GET call that obtains planet list given a search string in planets page
   Future<List<Planet>?> searchPlanets(String name) async {
     var url = "https://swapi.dev/api/planets/?search=$name";
     try {
@@ -116,6 +120,7 @@ class RemoteDataSource {
     }
   }
 
+  // method used to obtain a list of Planet objects from the whole json
   List<Planet> deserializePlanets(Map<String, dynamic> json) {
     return json['results']
         .map<Planet>((planet) => Planet.fromJson(planet))

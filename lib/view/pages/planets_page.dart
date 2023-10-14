@@ -42,7 +42,7 @@ class _PlanetsPageState extends State<PlanetsPage> {
               child: Column(
                 children: [
 
-                  // Campo di ricerca
+                  // Search field
                   Flexible(
                     flex: 1,
                     child: TextField(
@@ -60,7 +60,7 @@ class _PlanetsPageState extends State<PlanetsPage> {
                         }),
                   ),
 
-                  // Lista di pianeti
+                  // List of planets
                   Expanded(
                     flex: 9,
                     child: Container(
@@ -86,7 +86,7 @@ class _PlanetsPageState extends State<PlanetsPage> {
                     ),
                   ),
 
-                  // Barra delle pagine
+                  // Pages bar
                   Flexible(
                       flex: 1,
                       child: ListTile(
@@ -112,7 +112,7 @@ class _PlanetsPageState extends State<PlanetsPage> {
                 : const SizedBox.shrink(),
           ],
 
-          //Layout di errore
+          //Error layout
         ) : Container(
           decoration: const BoxDecoration(
             image: DecorationImage(

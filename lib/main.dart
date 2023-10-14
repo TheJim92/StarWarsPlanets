@@ -19,6 +19,9 @@ void main() {
       ),
     ),
   );
+
+  // Sets Android system navigation bar to black
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 }
 
 class MyApp extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/res/color_set.dart';
 
-// SnackBars per visualizzare i messaggi di errore o di successo
+// SnackBars to show error or success messages
 class SnackBars {
   static void showSnackBar(String message, BuildContext context) {
     var snackBar =  SnackBar(
@@ -14,8 +14,6 @@ class SnackBars {
       content: Text(message, textAlign: TextAlign.center,
           style: const TextStyle(color: AppColor.secondary)),
     );
-    //if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  //  }
   }
 }

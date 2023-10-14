@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import 'color_set.dart';
 
 class AppTextTheme {
-  /// Classe di raccolta degli stili dei testi
-  /// verranno definiti i TextStyle degli stili di testo
-  /// principali usati nell'app
 
-  /// Per riferimenti alla documentazione link: https://api.flutter.dev/flutter/material/TextTheme-class.html
-  /// il link riporta i criteri di definizione dei vari stile (headline1, bodyText1, ecc.)
+  // Class that contains the text styles used in the app
   static const headline1 = TextStyle(
     fontFamily: 'Manrope',
     fontWeight: FontWeight.w100,
@@ -23,7 +19,8 @@ class AppTextTheme {
     letterSpacing: (-0.5),
       color: Colors.white
   );
-  // subtitle1 è l'input dei textField
+
+  // subtitle1 is the textField input
   static const subtitle1 = TextStyle(
       fontFamily: 'Manrope',
       fontWeight: FontWeight.w400,
@@ -45,7 +42,8 @@ class AppTextTheme {
     color: Colors.white,
     letterSpacing: 0,
   );
-  // bodyText2 è il colore del testo nelle card
+
+  // bodyText2 is the card text color
   static const bodyText2 = TextStyle(
     fontFamily: 'Manrope',
     fontWeight: FontWeight.normal,

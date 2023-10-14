@@ -4,16 +4,11 @@ import '../../theme/res/text_set.dart';
 import '../../theme/schemes/app_text_scheme.dart';
 import '../../theme/schemes/app_color_scheme.dart';
 
-/// Classe di definizione dello stile
-/// riporta una funzione statica lightTheme() così nominata perchè definisce
-/// lo stile dell'app in lightMode,
-
+// Class containing the theme data.
 class AppTheme {
   static ThemeData darkTheme() {
-    return ThemeData( //textTheme: const TextTheme(titleMedium: TextStyle(color: Colors.pinkAccent)),
-      //brightness: Brightness.dark,
+    return ThemeData(
         scaffoldBackgroundColor: Colors.black,
-        // AppColor.background,
         appBarTheme: AppBarTheme(
           elevation: 0,
           backgroundColor: Colors.black,

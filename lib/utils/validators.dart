@@ -1,6 +1,6 @@
 enum Validator { emptyField, noSymbols, none}
 
-// Validators per i textField
+// Validators for textFields
 class Validators {
   static String? validateField(Validator v, String? input) {
     switch (v) {
