@@ -48,7 +48,7 @@ class _PlanetsPageState extends State<PlanetsPage> {
                     child: TextField(
                         decoration: const InputDecoration(
                           label: Text('Cerca',
-                              style: TextStyle(color: AppColor.secondary)),
+                              style: TextStyle(color: AppColor.primary)),
                         ),
                         controller: viewmodel.searchController,
                         onChanged: (text) {
@@ -85,15 +85,17 @@ class _PlanetsPageState extends State<PlanetsPage> {
                       ),
                     ),
                   ),
+
+                  // Barra delle pagine
                   Flexible(
                       flex: 1,
                       child: ListTile(
                           leading: IconButton(
                               onPressed: () => viewmodel.decrementPage(),
-                              icon: const Icon(Icons.chevron_left), color: AppColor.secondary),
+                              icon: const Icon(Icons.chevron_left), color: AppColor.primary),
                           trailing: IconButton(
                               onPressed: () => viewmodel.incrementPage(),
-                              icon: const Icon(Icons.chevron_right), color: AppColor.secondary),
+                              icon: const Icon(Icons.chevron_right), color: AppColor.primary),
                           title: Text('Pagina ${viewmodel.page}',
                               textAlign: TextAlign.center)))
                 ],
