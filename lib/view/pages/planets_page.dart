@@ -75,12 +75,7 @@ class _PlanetsPageState extends State<PlanetsPage> {
                         itemCount: viewmodel.planets.length,
                         itemBuilder: (context, index) {
                           var planet = viewmodel.planets[index];
-                          return PlanetCard(
-                              name: planet.name,
-                              population: planet.population,
-                              terrain: planet.terrain,
-                              diameter: planet.diameter,
-                              films: planet.films);
+                          return PlanetCard(planet: planet);
                         },
                       ),
                     ),
