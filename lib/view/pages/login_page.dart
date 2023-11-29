@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:star_wars_planets/theme/res/color_set.dart';
 import 'package:star_wars_planets/view/pages/planets_page.dart';
 import 'package:star_wars_planets/view/pages/registration_page.dart';
 
@@ -17,6 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  bool showPassword = false;
+
 
   // A simple local login check
   void verifyLogin() {
@@ -80,7 +83,17 @@ class _LoginPageState extends State<LoginPage> {
                         CustomTextField(
                             controller: passwordController,
                             label: 'Password',
+                            isObscured: !showPassword,
                             validator: Validator.emptyField),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Mostra password"),
+                            Checkbox(activeColor: AppColor.secondary, value: showPassword, onChanged: (bool? value) => setState(() {
+                              showPassword = value!;
+                            })),
+                          ],
+                        )
                       ],
                     ),
                   ),
